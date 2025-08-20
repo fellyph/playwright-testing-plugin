@@ -1,9 +1,15 @@
 <?php
 /**
- * Plugin Name: Playwright Simple Test Plugin
- * Description: A simple plugin for Playwright testing with fake data
- * Version: 1.0.0
- * Author: Test Developer
+* Plugin Name:       Playwright Test Plugin
+ * Description:       A minimal plugin for testing with Playwright
+ * Version:           1.0.0
+ * Author:            Fellyph Cintra
+ * Author URI:        https://profiles.wordpress.org/fellyph
+ * Text Domain:       playwright-test
+ * Requires at least: 6.0
+ * Requires PHP:      8.0
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 if (!defined('ABSPATH')) exit;
