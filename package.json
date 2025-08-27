@@ -1,20 +1,27 @@
 {
-  "name": "playground-tester",
+  "name": "playground-js-demos",
   "version": "1.0.0",
-  "description": "This repository contains the code and instructions for the workshop \"Building Automated Tests with WordPress Playground\" for WordCamp EU 2025.",
+  "description": "",
   "type": "module",
+  "main": "index.js",
   "scripts": {
-    "test": "vitest run --config=tests/integration/vitest.config.ts && npx playwright test --config=tests/end-to-end/playwright.config.ts",
-    "test:integration": "vitest --config=tests/integration/vitest.config.ts",
-    "test:e2e": "npx playwright test --ui --config=tests/end-to-end/playwright.config.ts"
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:headed": "npx playwright test --headed",
+    "start": "tsx demo-basic.ts",
+    "dev": "tsx watch demo-basic.ts"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "packageManager": "pnpm@10.15.0",
   "devDependencies": {
+    "@php-wasm/universal": "^2.0.12",
     "@playwright/test": "^1.55.0",
-    "@types/node": "^22.17.2",
-    "@wp-playground/cli": "^1.2.3",
-    "fetch-cookie": "^3.1.0",
-    "vitest": "^3.2.4"
+    "@wp-playground/blueprints": "^2.0.12",
+    "@wp-playground/cli": "^2.0.12",
+    "@wp-playground/wordpress-builds": "^0.9.19",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
   }
 }
