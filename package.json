@@ -24,6 +24,7 @@
     "@wp-playground/cli": "^2.0.15",
     "@wp-playground/wordpress-builds": "^0.9.19",
     "tsx": "^4.20.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "fs-ext": "^2.1.1"
   }
 }
