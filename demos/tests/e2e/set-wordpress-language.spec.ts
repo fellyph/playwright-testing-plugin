@@ -30,7 +30,7 @@ test.describe('set-wordpress-language', () => {
 			'/wordpress/check-language.php',
 			`<?php
             	require_once '/wordpress/wp-load.php';
-            	echo get_option('WPLANG');
+            	echo get_locale();
             ?>`
 		);
 		
