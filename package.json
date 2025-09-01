@@ -8,6 +8,7 @@
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
     "test:headed": "npx playwright test --headed",
+    "test:title": "npx playwright test tests/e2e/set-wordpress-options.spec.ts",
     "start": "tsx demo-basic.ts",
     "dev": "tsx watch demo-basic.ts"
   },
@@ -18,8 +19,9 @@
   "devDependencies": {
     "@php-wasm/universal": "^2.0.12",
     "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0",
     "@wp-playground/blueprints": "^2.0.12",
-    "@wp-playground/cli": "^2.0.12",
+    "@wp-playground/cli": "^2.0.15",
     "@wp-playground/wordpress-builds": "^0.9.19",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
