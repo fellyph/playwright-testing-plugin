@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { runCLI, RunCLIArgs, RunCLIServer } from "@wp-playground/cli";
 
-test.describe('set-wordpress-language', () => {
+test.describe('set-wordpress-options', () => {
     let cliServer: RunCLIServer;
 
     test.afterEach(async () => {
@@ -15,7 +15,6 @@ test.describe('set-wordpress-language', () => {
 		
 		cliServer = await runCLI({
 			command: 'server',
-			wp: 'latest',
 			blueprint: {
 				steps: [
                     {
