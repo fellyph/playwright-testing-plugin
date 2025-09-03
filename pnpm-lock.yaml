@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      fs-ext:
-        specifier: ^2.1.1
-        version: 2.1.1
     devDependencies:
       '@php-wasm/universal':
         specifier: ^2.0.12
@@ -30,6 +26,12 @@ importers:
       '@wp-playground/wordpress-builds':
         specifier: ^0.9.19
         version: 0.9.19
+      fs-ext:
+        specifier: ^2.1.1
+        version: 2.1.1
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
       tsx:
         specifier: ^4.20.5
         version: 4.20.5
@@ -805,6 +807,11 @@ packages:
   playwright@1.55.0:
     resolution: {integrity: sha512-sdCWStblvV1YU909Xqx0DhOjPZE4/5lJsIS84IfN9dAZfcl/CIZ5O8l3o0j7hPMjDvqoTF8ZUcc+i/GL5erstA==}
     engines: {node: '>=18'}
+    hasBin: true
+
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
     hasBin: true
 
   proxy-addr@2.0.7:
@@ -1944,6 +1951,8 @@ snapshots:
       playwright-core: 1.55.0
     optionalDependencies:
       fsevents: 2.3.2
+
+  prettier@3.6.2: {}
 
   proxy-addr@2.0.7:
     dependencies:

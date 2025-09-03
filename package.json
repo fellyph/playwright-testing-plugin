@@ -10,7 +10,9 @@
     "test:headed": "npx playwright test --headed",
     "test:title": "npx playwright test tests/e2e/set-wordpress-options.spec.ts",
     "start": "tsx demo-basic.ts",
-    "dev": "tsx watch demo-basic.ts"
+    "dev": "tsx watch demo-basic.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",
@@ -23,8 +25,9 @@
     "@wp-playground/blueprints": "^2.0.12",
     "@wp-playground/cli": "^2.0.15",
     "@wp-playground/wordpress-builds": "^0.9.19",
+    "fs-ext": "^2.1.1",
+    "prettier": "^3.6.2",
     "tsx": "^4.20.5",
-    "typescript": "^5.9.2",
-    "fs-ext": "^2.1.1"
+    "typescript": "^5.9.2"
   }
 }
