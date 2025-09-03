@@ -4,6 +4,7 @@ let cliServer: RunCLIServer;
 
 cliServer = await runCLI({
   command: 'server',
+  login: true,
   blueprint: {
     steps: [
       {
