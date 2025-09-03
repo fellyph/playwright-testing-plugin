@@ -1,49 +1,49 @@
 import { test, expect } from '@playwright/test';
-import { runCLI, RunCLIArgs, RunCLIServer } from "@wp-playground/cli";
+import { runCLI, RunCLIArgs, RunCLIServer } from '@wp-playground/cli';
 
 test.describe('set-wordpress-user', () => {
-    let cliServer: RunCLIServer;
+  let cliServer: RunCLIServer;
 
-    // Test data - organized for better maintainability
-    const testUserData = {
-        firstName: 'John',
-        lastName: 'Doe',
-        nickname: 'Johny',
-        description: 'This is the biographical info from John Doe.',
-        adminColor: 'midnight',
-        userId: 1
-    };
+  // Test data - organized for better maintainability
+  const testUserData = {
+    firstName: 'John',
+    lastName: 'Doe',
+    nickname: 'Johny',
+    description: 'This is the biographical info from John Doe.',
+    adminColor: 'midnight',
+    userId: 1,
+  };
 
-    test.afterEach(async () => {
-        if(cliServer) {
-            await cliServer.server.close();
-        }
-    });
+  test.afterEach(async () => {
+    if (cliServer) {
+      await cliServer.server.close();
+    }
+  });
 
-	test('should set WordPress user name and description', async () => {
-		cliServer = await runCLI({
-			command: 'server',
-			blueprint: {
-				steps: [
-                    {
-                       "step": "updateUserMeta",
-						"meta": {
-							"first_name": testUserData.firstName,
-							"last_name": testUserData.lastName,
-							"admin_color": testUserData.adminColor,
-							"nickname": testUserData.nickname,
-							"description": testUserData.description
-						},
-						"userId": testUserData.userId
-                    }
-				],
-			},
-		} as RunCLIArgs);
-		
-		// Create a PHP file to check the user data with better error handling
-		await cliServer.playground.writeFile(
-			'/wordpress/check-user.php',
-			`<?php
+  test('should set WordPress user name and description', async () => {
+    cliServer = await runCLI({
+      command: 'server',
+      blueprint: {
+        steps: [
+          {
+            step: 'updateUserMeta',
+            meta: {
+              first_name: testUserData.firstName,
+              last_name: testUserData.lastName,
+              admin_color: testUserData.adminColor,
+              nickname: testUserData.nickname,
+              description: testUserData.description,
+            },
+            userId: testUserData.userId,
+          },
+        ],
+      },
+    } as RunCLIArgs);
+
+    // Create a PHP file to check the user data with better error handling
+    await cliServer.playground.writeFile(
+      '/wordpress/check-user.php',
+      `<?php
             require_once '/wordpress/wp-load.php';
             
             try {
@@ -83,70 +83,72 @@ test.describe('set-wordpress-user', () => {
                 echo json_encode(['error' => $e->getMessage()]);
             }
             ?>`
-		);
-		
-		const response = await cliServer.playground.request({
-			url: '/check-user.php',
-			method: 'GET',
-		});
-		
-		// Better error handling for HTTP response
-		expect(response.httpStatusCode).toBe(200);
-		
-		// Parse the JSON response with error handling
-		let userData;
-		try {
-			userData = JSON.parse(response.text);
-		} catch (error) {
-			throw new Error(`Failed to parse JSON response: ${response.text}`);
-		}
-		
-		// Check for API errors
-		expect(userData.success).toBe(true);
-		expect(userData.error).toBeUndefined();
-		
-		// Comprehensive assertions
-		expect(userData.user_id).toBe(testUserData.userId);
-		expect(userData.first_name).toBe(testUserData.firstName);
-		expect(userData.last_name).toBe(testUserData.lastName);
-		expect(userData.nickname).toBe(testUserData.nickname);
-		expect(userData.description).toBe(testUserData.description);
-		expect(userData.admin_color).toBe(testUserData.adminColor);
-		
-		// Check derived values
-		expect(userData.full_name).toBe(`${testUserData.firstName} ${testUserData.lastName}`);
-		expect(userData.meta_updated).toBe(true);
-		
-		// Check that essential user fields exist
-		expect(userData.user_login).toBeTruthy();
-		expect(userData.user_email).toBeTruthy();
-		expect(userData.display_name).toBeTruthy();
-		
-		// Verify the user is actually an admin (user ID 1)
-		expect(userData.user_id).toBe(1);
-	});
+    );
 
-	test('should handle invalid user ID gracefully', async () => {
-		cliServer = await runCLI({
-			command: 'server',
-			blueprint: {
-				steps: [
-                    {
-                       "step": "updateUserMeta",
-						"meta": {
-							"first_name": "Test",
-							"last_name": "User"
-						},
-						"userId": 999 // Non-existent user
-                    }
-				],
-			},
-		} as RunCLIArgs);
-		
-		// Create a PHP file to check non-existent user
-		await cliServer.playground.writeFile(
-			'/wordpress/check-invalid-user.php',
-			`<?php
+    const response = await cliServer.playground.request({
+      url: '/check-user.php',
+      method: 'GET',
+    });
+
+    // Better error handling for HTTP response
+    expect(response.httpStatusCode).toBe(200);
+
+    // Parse the JSON response with error handling
+    let userData;
+    try {
+      userData = JSON.parse(response.text);
+    } catch (error) {
+      throw new Error(`Failed to parse JSON response: ${response.text}`);
+    }
+
+    // Check for API errors
+    expect(userData.success).toBe(true);
+    expect(userData.error).toBeUndefined();
+
+    // Comprehensive assertions
+    expect(userData.user_id).toBe(testUserData.userId);
+    expect(userData.first_name).toBe(testUserData.firstName);
+    expect(userData.last_name).toBe(testUserData.lastName);
+    expect(userData.nickname).toBe(testUserData.nickname);
+    expect(userData.description).toBe(testUserData.description);
+    expect(userData.admin_color).toBe(testUserData.adminColor);
+
+    // Check derived values
+    expect(userData.full_name).toBe(
+      `${testUserData.firstName} ${testUserData.lastName}`
+    );
+    expect(userData.meta_updated).toBe(true);
+
+    // Check that essential user fields exist
+    expect(userData.user_login).toBeTruthy();
+    expect(userData.user_email).toBeTruthy();
+    expect(userData.display_name).toBeTruthy();
+
+    // Verify the user is actually an admin (user ID 1)
+    expect(userData.user_id).toBe(1);
+  });
+
+  test('should handle invalid user ID gracefully', async () => {
+    cliServer = await runCLI({
+      command: 'server',
+      blueprint: {
+        steps: [
+          {
+            step: 'updateUserMeta',
+            meta: {
+              first_name: 'Test',
+              last_name: 'User',
+            },
+            userId: 999, // Non-existent user
+          },
+        ],
+      },
+    } as RunCLIArgs);
+
+    // Create a PHP file to check non-existent user
+    await cliServer.playground.writeFile(
+      '/wordpress/check-invalid-user.php',
+      `<?php
             require_once '/wordpress/wp-load.php';
             
             try {
@@ -165,17 +167,17 @@ test.describe('set-wordpress-user', () => {
                 echo json_encode(['error' => $e->getMessage()]);
             }
             ?>`
-		);
-		
-		const response = await cliServer.playground.request({
-			url: '/check-invalid-user.php',
-			method: 'GET',
-		});
-		
-		expect(response.httpStatusCode).toBe(404);
-		
-		const errorData = JSON.parse(response.text);
-		expect(errorData.error).toBe('User not found');
-		expect(errorData.user_id).toBe(999);
-	});
+    );
+
+    const response = await cliServer.playground.request({
+      url: '/check-invalid-user.php',
+      method: 'GET',
+    });
+
+    expect(response.httpStatusCode).toBe(404);
+
+    const errorData = JSON.parse(response.text);
+    expect(errorData.error).toBe('User not found');
+    expect(errorData.user_id).toBe(999);
+  });
 });
