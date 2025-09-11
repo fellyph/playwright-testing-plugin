@@ -10,7 +10,7 @@
     "test:headed": "npx playwright test --headed",
     "test:title": "npx playwright test tests/e2e/set-wordpress-options.spec.ts",
     "start": "tsx demo-basic.ts",
-    "dev": "tsx watch demos/step-library.ts",
+    "dev": "tsx watch demo-basic.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
